@@ -1,0 +1,11 @@
+{
+  "name": "tennis-string-selector",
+  "version": "1.0.0",
+  "description": "Recommends tennis strings, gauge and tension from a player's rating, age, gender, swing style and racquet.",
+  "private": true,
+  "scripts": {
+    "test": "node --test",
+    "start": "npx --yes serve ."
+  },
+  "license": "MIT"
+}
