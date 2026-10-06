@@ -86,7 +86,9 @@
     } else if (p.style === "flat") {
       w.control += 1.5; w.tensionHold += 0.3; w.power -= 0.3;
     } else {
-      w.comfort += 0.4; w.power += 0.2;
+      w.comfort += 1; w.power += 0.4;
+      // Intermediate all-courters rely on touch and feel more than raw spin.
+      if (p.rating >= 3.0 && p.rating <= 4.0) w.comfort += 0.5;
     }
 
     // Age: the young and the older both benefit from softer, livelier strings.
@@ -163,7 +165,7 @@
     // Price tiers run 1 (budget) to 4 (natural gut).
     const PRICE_PENALTY = {
       value: [0, 0, 4, 8, Infinity],
-      mid: [0, 0, 1, 3, 7],
+      mid: [0, 0, 1, 3, 12],
       premium: [0, 0, 0, 0, 0],
     };
     const pricePenalty = (PRICE_PENALTY[p.budget] || PRICE_PENALTY.mid)[string.price];

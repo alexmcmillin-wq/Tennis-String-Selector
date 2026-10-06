@@ -71,3 +71,18 @@ test("helpers classify patterns and ages", () => {
   assert.equal(ageGroup(16), "teen");
   assert.equal(ageGroup(70), "veteran");
 });
+
+test("intermediate all-court players get a full multifilament bed among the picks", () => {
+  for (const rating of [3.0, 3.5]) {
+    for (const budget of ["value", "mid"]) {
+      const r = recommend(player({ rating, budget }));
+      assert.ok(r.picks.some((p) => p.type === "multi"), `${rating} ${budget}: ${r.picks.map((p) => p.name).join(", ")}`);
+    }
+  }
+});
+
+test("hybrids are priced as the average of their two strings", () => {
+  const { STRINGS } = require("../js/data.js");
+  const rpmMulti = STRINGS.find((s) => s.id === "rpm-multi");
+  assert.equal(rpmMulti.price, 3); // RPM Blast (2) + X-One Biphase (3), rounded up
+});

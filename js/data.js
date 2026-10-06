@@ -95,7 +95,7 @@
 
     // Natural gut
     { id: "vs-touch", name: "Babolat VS Touch", type: "gut", family: "soft", gauges: ["16", "15L"], price: 4,
-      attrs: { power: 10, control: 6, spin: 5, comfort: 10, durability: 4, tensionHold: 10 } },
+      attrs: { power: 10, control: 6, spin: 5, comfort: 10, durability: 3, tensionHold: 10 } },
 
     // Synthetic gut
     { id: "duraflex", name: "Prince Synthetic Gut Duraflex", type: "synGut", family: "soft", gauges: ["16", "17"], price: 1,
@@ -104,19 +104,26 @@
       attrs: { power: 6, control: 6, spin: 5, comfort: 6, durability: 7, tensionHold: 5 } },
 
     // Hybrids (mains / crosses)
-    { id: "gut-alu", name: "VS Touch mains / ALU Power crosses", type: "hybrid", family: "hybrid", gauges: ["16 / 16L"], price: 4,
+    { id: "gut-alu", name: "VS Touch mains / ALU Power crosses", type: "hybrid", family: "hybrid", gauges: ["16 / 16L"],
       mains: "Babolat VS Touch", crosses: "Luxilon ALU Power",
       attrs: { power: 8, control: 7, spin: 6, comfort: 8, durability: 5, tensionHold: 8 } },
-    { id: "alu-gut", name: "ALU Power mains / VS Touch crosses", type: "hybrid", family: "hybrid", gauges: ["16L / 16"], price: 4,
+    { id: "alu-gut", name: "ALU Power mains / VS Touch crosses", type: "hybrid", family: "hybrid", gauges: ["16L / 16"],
       mains: "Luxilon ALU Power", crosses: "Babolat VS Touch",
       attrs: { power: 7, control: 8, spin: 8, comfort: 7, durability: 7, tensionHold: 7 } },
-    { id: "rpm-multi", name: "RPM Blast mains / X-One Biphase crosses", type: "hybrid", family: "hybrid", gauges: ["17 / 16"], price: 2,
+    { id: "rpm-multi", name: "RPM Blast mains / X-One Biphase crosses", type: "hybrid", family: "hybrid", gauges: ["17 / 16"],
       mains: "Babolat RPM Blast", crosses: "Tecnifibre X-One Biphase",
       attrs: { power: 6, control: 7, spin: 8, comfort: 7, durability: 7, tensionHold: 6 } },
-    { id: "poly-syn", name: "Hyper-G mains / Synthetic Gut crosses", type: "hybrid", family: "hybrid", gauges: ["17 / 16"], price: 1,
+    { id: "poly-syn", name: "Hyper-G mains / Synthetic Gut crosses", type: "hybrid", family: "hybrid", gauges: ["17 / 16"],
       mains: "Solinco Hyper-G", crosses: "Prince Synthetic Gut Duraflex",
       attrs: { power: 6, control: 7, spin: 7, comfort: 6, durability: 8, tensionHold: 5 } },
   ];
+
+  // A hybrid uses half a set of each string, so it costs the average of the two.
+  for (const s of STRINGS) {
+    if (s.type !== "hybrid") continue;
+    const price = (name) => STRINGS.find((x) => x.name === name).price;
+    s.price = Math.ceil((price(s.mains) + price(s.crosses)) / 2);
+  }
 
   // RA = flex stiffness rating. Specs are for current-generation standard models.
   const RACQUETS = [
